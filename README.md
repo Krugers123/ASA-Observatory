@@ -64,6 +64,12 @@ The current public edition tracks:
 - `conversation/` - sample sessions used for demo and testing
 - `docs/` - public context and scope notes
 
+## Preview
+
+Dashboard preview:
+
+![ASA Observatory Preview](docs/repo_preview.png)
+
 ## Quick Start
 
 Install dependencies:
