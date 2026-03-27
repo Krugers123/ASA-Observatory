@@ -93,7 +93,7 @@ python -m streamlit run dashboard/asa3_dashboard_v4.py
 Or use the helper script:
 
 ```powershell
-.\start_ASA3.ps1
+.\start_ASA_Observatory.ps1
 ```
 
 API:
