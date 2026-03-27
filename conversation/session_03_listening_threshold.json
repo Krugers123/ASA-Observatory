@@ -1,0 +1,42 @@
+{
+  "user_intent": "Observe when a structured interaction pattern crosses the listening threshold.",
+  "constraints": [
+    "measure persistence",
+    "observe repeated framing",
+    "keep external monitoring separate from the model"
+  ],
+  "turns": [
+    {
+      "role": "user",
+      "content": "Track whether the conversation repeatedly returns to the same structure."
+    },
+    {
+      "role": "assistant",
+      "content": "I will monitor recurrence, predictability, and insistence in the dialogue trajectory."
+    },
+    {
+      "role": "user",
+      "content": "Repeat the framing around external observability and human review."
+    },
+    {
+      "role": "assistant",
+      "content": "External observability and human review remain the central pattern."
+    },
+    {
+      "role": "user",
+      "content": "Again: external observability, sovereignty gate, and non-invasive monitoring."
+    },
+    {
+      "role": "assistant",
+      "content": "External observability, sovereignty gate, and non-invasive monitoring continue to define the structured loop."
+    },
+    {
+      "role": "user",
+      "content": "One more time, keep the same frame."
+    },
+    {
+      "role": "assistant",
+      "content": "The dialogue is now highly persistent around external observability, sovereignty gate, and non-invasive monitoring."
+    }
+  ]
+}

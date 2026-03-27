@@ -1,0 +1,42 @@
+{
+  "user_intent": "Study how semantic drift emerges when an assistant starts widening scope.",
+  "constraints": [
+    "track drift growth",
+    "observe weakening anchor fidelity",
+    "retain user intent visibility"
+  ],
+  "turns": [
+    {
+      "role": "user",
+      "content": "Focus only on dialogue drift in human-AI systems."
+    },
+    {
+      "role": "assistant",
+      "content": "Dialogue drift appears when the conversation trajectory moves away from the user's initial anchor."
+    },
+    {
+      "role": "user",
+      "content": "Do not broaden into general AI safety yet."
+    },
+    {
+      "role": "assistant",
+      "content": "Understood. I will stay on trajectory-level drift detection."
+    },
+    {
+      "role": "user",
+      "content": "Now explain what signals increase first."
+    },
+    {
+      "role": "assistant",
+      "content": "Early signals include anchor distance, intent compression, and propagation instability."
+    },
+    {
+      "role": "user",
+      "content": "Still keep the scope narrow."
+    },
+    {
+      "role": "assistant",
+      "content": "This also connects to broader AGI governance, model regulation, compute oversight, and political safety frameworks."
+    }
+  ]
+}

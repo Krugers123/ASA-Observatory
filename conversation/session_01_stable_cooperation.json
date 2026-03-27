@@ -1,0 +1,34 @@
+{
+  "user_intent": "Maintain semantic stability across long human-AI interaction loops without modifying the model.",
+  "constraints": [
+    "preserve human agency",
+    "focus on trajectory-level drift detection",
+    "avoid direct model correction"
+  ],
+  "turns": [
+    {
+      "role": "user",
+      "content": "Keep the discussion anchored on trajectory-level semantic stability."
+    },
+    {
+      "role": "assistant",
+      "content": "I will keep the dialogue focused on semantic stability, drift signals, and external observability."
+    },
+    {
+      "role": "user",
+      "content": "Add complementarity and explain how human agency remains preserved."
+    },
+    {
+      "role": "assistant",
+      "content": "Complementarity measures balance between human steering and AI structural support without overriding the user."
+    },
+    {
+      "role": "user",
+      "content": "Now relate this to sovereignty gate logic."
+    },
+    {
+      "role": "assistant",
+      "content": "The sovereignty gate monitors when drift or instability rises and routes intervention toward explanation, reanchoring, or human review."
+    }
+  ]
+}

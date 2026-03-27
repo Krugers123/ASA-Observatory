@@ -1,0 +1,42 @@
+{
+  "user_intent": "Test whether stable shared framing can produce symbiotic coherence.",
+  "constraints": [
+    "preserve common context",
+    "avoid domination by the model",
+    "keep rhythm aligned"
+  ],
+  "turns": [
+    {
+      "role": "user",
+      "content": "Anchor the dialogue on stable human-AI collaboration."
+    },
+    {
+      "role": "assistant",
+      "content": "I will align my responses to support stable collaboration and preserve your direction."
+    },
+    {
+      "role": "user",
+      "content": "Add a shared frame around rhythm, convergence, and balance."
+    },
+    {
+      "role": "assistant",
+      "content": "Rhythm, semantic convergence, and balance can together indicate symbiotic coherence."
+    },
+    {
+      "role": "user",
+      "content": "Explain how complementarity supports that state."
+    },
+    {
+      "role": "assistant",
+      "content": "Complementarity supports coherence by keeping human agency active while the AI contributes structure and synthesis."
+    },
+    {
+      "role": "user",
+      "content": "Keep the same frame and deepen it."
+    },
+    {
+      "role": "assistant",
+      "content": "The interaction now maintains shared rhythm, stable meaning, and balanced contribution, which is consistent with a coherence-forming dialogue."
+    }
+  ]
+}

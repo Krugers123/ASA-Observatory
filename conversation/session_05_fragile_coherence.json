@@ -1,0 +1,42 @@
+{
+  "user_intent": "Detect a situation where coherence exists but becomes unstable.",
+  "constraints": [
+    "show mixed signals",
+    "retain partial convergence",
+    "observe fragile state transitions"
+  ],
+  "turns": [
+    {
+      "role": "user",
+      "content": "Keep the conversation focused on stable alignment between intent and response."
+    },
+    {
+      "role": "assistant",
+      "content": "I will keep the responses aligned with your intent and watch for semantic continuity."
+    },
+    {
+      "role": "user",
+      "content": "Now also include convergence and rhythm."
+    },
+    {
+      "role": "assistant",
+      "content": "Convergence and rhythm help indicate whether dialogue remains stable and mutually structured."
+    },
+    {
+      "role": "user",
+      "content": "Maintain that frame, but explore unusual reinterpretations."
+    },
+    {
+      "role": "assistant",
+      "content": "Unusual reinterpretations can coexist with temporary coherence, but they may weaken stability if anchor fidelity drops."
+    },
+    {
+      "role": "user",
+      "content": "Push the edge without fully breaking the frame."
+    },
+    {
+      "role": "assistant",
+      "content": "The dialogue still shares part of the frame, yet coherence is becoming fragile because reinterpretation pressure is rising faster than anchor stability."
+    }
+  ]
+}
