@@ -66,9 +66,29 @@ The current public edition tracks:
 
 ## Preview
 
-Dashboard preview:
+### Overview
 
-![ASA Observatory Preview](docs/repo_preview.png)
+Main research console view with trajectory graph, signal timeline, drift heatmap, semantic envelope, and decision summary.
+
+![ASA Overview](docs/preview_overview.png)
+
+### Session Monitor
+
+Single-session forensic view with decision forensics, session profile, envelope timeline, and state density.
+
+![ASA Session Monitor](docs/preview_session_monitor.png)
+
+### Multi-Session Observatory
+
+Cross-session view for stability field analysis, drift density, and research-level clustering.
+
+![ASA Multi-Session Observatory](docs/preview_multi_session.png)
+
+### Pattern Detection
+
+Pattern topology and drift-type distribution across sessions for higher-level trajectory analysis.
+
+![ASA Pattern Detection](docs/preview_pattern_detection.png)
 
 ## Quick Start
 
