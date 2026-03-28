@@ -56,6 +56,25 @@ The current public edition tracks:
 - forensic trace views
 - trajectory compression
 
+## LTP Relation
+
+ASA is closely related to `LTP`:
+
+`LTP = Latent Threshold Protocol`
+
+In the broader research framework, LTP focuses on early instability detection in long-horizon Human-AI interaction.
+
+Conceptually, LTP is concerned with the threshold zone in which a dialogue may still appear locally coherent while already moving toward instability at the trajectory level.
+
+In practice, ASA Observatory exposes part of this logic through:
+- threshold / listening pressure
+- drift escalation monitoring
+- semantic envelope tracking
+- trajectory-level instability observation
+
+The public edition does not expose the full internal research calibration layer.
+Instead, it presents the observability surface through which threshold-related instability can be studied and demonstrated.
+
 ## Repository Structure
 
 - `core/` - ASA analytical engine and state logic
