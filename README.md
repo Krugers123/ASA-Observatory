@@ -147,6 +147,20 @@ Dashboard:
 http://127.0.0.1:8501
 ```
 
+## Basic Usage
+
+You can also run a compact trajectory report without starting the API or dashboard:
+
+```powershell
+python examples/basic_usage.py
+```
+
+Or point it to a different sample session:
+
+```powershell
+python examples/basic_usage.py conversation/session_01_stable_cooperation.json
+```
+
 ## Example Data
 
 The `conversation/` folder includes sample sessions such as:
