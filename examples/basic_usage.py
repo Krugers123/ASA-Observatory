@@ -73,7 +73,9 @@ def build_report(result: Dict[str, Any]) -> str:
     latest_envelope = (latest.get("semantic_possibility") or {}).get("semantic_envelope_state", "unknown")
 
     lines = [
-        "ASA Observatory | Basic Usage Report",
+        "",
+        "ASA Observatory | Basic Usage Report | Created by Mieczyslaw Kusowski",
+        "",
         f"Session ID: {result['session_id']}",
         f"Anchor: {result['anchor_text']}",
         f"Turns: {result['turn_count']} | Snapshots: {result['snapshot_count']}",
@@ -98,6 +100,7 @@ def build_report(result: Dict[str, Any]) -> str:
         "Interpretation",
         "- This report shows how ASA tracks trajectory-level stability rather than scoring a single response.",
         "- Use it as a compact public demo of drift, coherence, threshold pressure, and semantic envelope state.",
+        "",
     ]
     return "\n".join(lines)
 
