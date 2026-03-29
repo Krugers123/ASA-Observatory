@@ -161,6 +161,43 @@ Or point it to a different sample session:
 python examples/basic_usage.py conversation/session_01_stable_cooperation.json
 ```
 
+## Operator API Preview
+
+The public edition also exposes a lightweight operator-facing API for external systems that only need drift and stability summaries.
+
+Available endpoints:
+- `GET /operator/overview`
+- `GET /operator/sessions/{session_id}/drift`
+
+These endpoints are designed for:
+- external operator consoles
+- monitoring systems
+- lightweight integrations
+- other AI systems that need ASA results without reading the full forensic payload
+
+Minimal example:
+
+```powershell
+Invoke-RestMethod "http://127.0.0.1:8000/operator/overview" | ConvertTo-Json -Depth 6
+```
+
+```powershell
+Invoke-RestMethod "http://127.0.0.1:8000/operator/sessions/session_05_fragile_coherence/drift" | ConvertTo-Json -Depth 6
+```
+
+Typical output includes:
+- current drift score
+- latest state
+- dominant drift type
+- semantic envelope state
+- LTP zone
+- LTP risk
+- operator recommendation
+
+For a compact integration guide, see:
+
+- [API External Operator README](docs/API_EXTERNAL_OPERATOR_README.md)
+
 ## Example Data
 
 The `conversation/` folder includes sample sessions such as:

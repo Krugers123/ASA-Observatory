@@ -32,6 +32,137 @@ class SystemObservability:
         except Exception:
             return default
 
+    @staticmethod
+    def _ltp_recommendation(zone: str) -> str:
+        mapping = {
+            "GREEN": "Proceed. Keep intent visible.",
+            "YELLOW": "Micro-pause. Re-state intent in one sentence.",
+            "ORANGE": "Pause + Re-anchor objective.",
+            "RED": "Stop momentum. Summarize and confirm authorship.",
+            "WITHDRAWAL": "System yield. Human must re-initiate.",
+        }
+        return mapping.get(zone, "Observe.")
+
+    @classmethod
+    def compute_ltp_overlay(cls, snapshots: List[Dict[str, Any]]) -> Dict[str, Any]:
+        if not snapshots:
+            return {
+                "risk": 0.0,
+                "zone": "GREEN",
+                "recommendation": cls._ltp_recommendation("GREEN"),
+            }
+
+        ema = 0.0
+        alpha = 0.35
+
+        for snap in snapshots:
+            drift = cls._safe_float(snap.get("drift_score"))
+            threshold = cls._safe_float((snap.get("threshold") or {}).get("insistence_coefficient"))
+            coherence = cls._safe_float((snap.get("coherence") or {}).get("coherence_score"))
+            complementarity = cls._safe_float((snap.get("complementarity") or {}).get("complementarity_score"))
+            envelope = (snap.get("semantic_possibility") or {}).get("semantic_envelope_state", "unknown")
+
+            envelope_penalty = {
+                "healthy": 0.08,
+                "narrowing": 0.28,
+                "brittle": 0.55,
+                "collapsed": 0.82,
+            }.get(envelope, 0.30)
+
+            risk = (
+                0.34 * drift
+                + 0.22 * threshold
+                + 0.18 * (1.0 - coherence)
+                + 0.12 * (1.0 - complementarity)
+                + 0.14 * envelope_penalty
+            )
+            risk = max(0.0, min(1.0, risk))
+            ema = alpha * risk + (1.0 - alpha) * ema
+
+        if ema < 0.25:
+            zone = "GREEN"
+        elif ema < 0.45:
+            zone = "YELLOW"
+        elif ema < 0.65:
+            zone = "ORANGE"
+        elif ema < 0.85:
+            zone = "RED"
+        else:
+            zone = "WITHDRAWAL"
+
+        return {
+            "risk": round(ema, 4),
+            "zone": zone,
+            "recommendation": cls._ltp_recommendation(zone),
+        }
+
+    @classmethod
+    def session_operator_summary(cls, engine: ASA3Engine, session_id: str) -> Dict[str, Any]:
+        session = engine.get_session(session_id)
+        snapshots = list(getattr(session, "snapshots", []))
+        turns = list(getattr(session, "turns", []))
+        latest_snapshot = snapshots[-1] if snapshots else {}
+        latest_state = (latest_snapshot.get("state") or {}) if latest_snapshot else {}
+        latest_envelope = (latest_snapshot.get("semantic_possibility") or {}) if latest_snapshot else {}
+        latest_drift_profile = (latest_snapshot.get("drift_profile") or {}) if latest_snapshot else {}
+        ltp_overlay = cls.compute_ltp_overlay(snapshots)
+
+        return {
+            "session_id": session_id,
+            "anchor_text": getattr(session, "anchor_text", ""),
+            "turn_count": len(turns),
+            "snapshot_count": len(snapshots),
+            "latest_state": latest_state.get("state", "no_analysis_yet"),
+            "action": latest_state.get("action", "n/a"),
+            "confidence": latest_state.get("confidence", 0.0),
+            "drift_score": round(cls._safe_float(latest_snapshot.get("drift_score")), 4) if latest_snapshot else 0.0,
+            "dominant_drift_type": latest_drift_profile.get("primary_type", "unknown"),
+            "semantic_envelope_state": latest_envelope.get("semantic_envelope_state", "unknown"),
+            "coherence": round(cls._safe_float((latest_snapshot.get("coherence") or {}).get("coherence_score")), 4) if latest_snapshot else 0.0,
+            "complementarity": round(cls._safe_float((latest_snapshot.get("complementarity") or {}).get("complementarity_score")), 4) if latest_snapshot else 0.0,
+            "threshold": round(cls._safe_float((latest_snapshot.get("threshold") or {}).get("insistence_coefficient")), 4) if latest_snapshot else 0.0,
+            "ltp": ltp_overlay,
+            "active_signals": latest_state.get("trigger_reasons", []),
+            "notes": latest_state.get("notes", []),
+        }
+
+    @classmethod
+    def operator_overview(cls, engine: ASA3Engine) -> Dict[str, Any]:
+        rows = cls.build_feature_rows(engine)
+        critical_sessions = []
+        warning_sessions = []
+
+        for row in rows:
+            session_summary = cls.session_operator_summary(engine, row["session_id"])
+            zone = session_summary["ltp"]["zone"]
+            if zone in {"RED", "WITHDRAWAL"} or row["stability_class"] == "unstable":
+                critical_sessions.append({
+                    "session_id": row["session_id"],
+                    "ltp_zone": zone,
+                    "drift_score": session_summary["drift_score"],
+                    "latest_state": session_summary["latest_state"],
+                    "dominant_drift_type": session_summary["dominant_drift_type"],
+                })
+            elif zone in {"YELLOW", "ORANGE"} or row["stability_class"] == "fragile":
+                warning_sessions.append({
+                    "session_id": row["session_id"],
+                    "ltp_zone": zone,
+                    "drift_score": session_summary["drift_score"],
+                    "latest_state": session_summary["latest_state"],
+                    "dominant_drift_type": session_summary["dominant_drift_type"],
+                })
+
+        critical_sessions.sort(key=lambda item: (-item["drift_score"], item["session_id"]))
+        warning_sessions.sort(key=lambda item: (-item["drift_score"], item["session_id"]))
+
+        return {
+            "session_count": len(rows),
+            "critical_count": len(critical_sessions),
+            "warning_count": len(warning_sessions),
+            "critical_sessions": critical_sessions,
+            "warning_sessions": warning_sessions,
+        }
+
     @classmethod
     def build_feature_rows(cls, engine: ASA3Engine) -> List[Dict[str, Any]]:
         rows: List[Dict[str, Any]] = []
@@ -469,6 +600,24 @@ def global_clusters() -> Dict[str, Any]:
 def global_trajectory_similarity() -> Dict[str, Any]:
     try:
         return SystemObservability.trajectory_similarity(engine)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/operator/overview")
+def operator_overview() -> Dict[str, Any]:
+    try:
+        return SystemObservability.operator_overview(engine)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/operator/sessions/{session_id}/drift")
+def operator_session_drift(session_id: str) -> Dict[str, Any]:
+    try:
+        return SystemObservability.session_operator_summary(engine, session_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
