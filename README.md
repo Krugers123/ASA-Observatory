@@ -4,22 +4,51 @@ Research-grade observability for Human-AI dialogue stability, semantic drift det
 
 ## What It Is
 
-ASA Observatory is an external observability layer for Human-AI dialogue trajectories.
+ASA (Asymmetric Stability Architecture) is an external, modular observability architecture designed to detect and forecast instability in trajectories of meaning across complex sequential systems.
 
-It does not modify model weights, fine-tune behavior, or simulate emotions.
-It observes how meaning evolves across a conversation and looks for early signs of instability before failure becomes obvious in the visible output.
+ASA does not modify the model or system it observes.
+Instead, it watches from the outside how meaning evolves over time: tracking semantic drift, narrowing possibility space, loss of complementarity, and shifts in the anchor of intent.
 
-Core focus:
-- semantic drift
-- coherence weakening
-- threshold pressure
-- complementarity between human and AI
-- semantic envelope narrowing
-- multi-session trajectory patterns
+Through its threshold layer, `LTP` (`Latent Threshold Protocol`), ASA can detect subtle fractures in coherence at an early stage, before they become visible to the operator or user.
 
-In short:
+The current public edition of ASA is developed primarily in the context of long-horizon Human-AI interaction, because dialogue makes trajectory-level meaning drift especially visible.
+But the underlying architecture is broader.
 
-`ASA = EKG for meaning in long-horizon Human-AI dialogue`
+ASA is being developed toward an independent contextual layer: an observational mechanism that ingests data, reads instability across trajectories, and indicates directional change across sequence-based, time-evolving environments.
+
+A key property of ASA is full operator control and modularity.
+The system can scale and adapt to the needs of a specific partner or environment without imposing a single rigid deployment logic.
+
+ASA is not a tool for "fixing" AI.
+It is a tool for understanding how meaning actually evolves over time, and for helping preserve stability where that matters most.
+
+## Why It Matters
+
+Many AI evaluations still focus on single outputs:
+
+- was the answer correct
+- was it safe
+- was it fluent
+
+ASA asks a different question:
+
+`does the interaction remain coherent over time`
+
+That matters because long-horizon failure often does not begin as a visible error.
+It begins as gradual drift:
+
+- the anchor weakens
+- the frame narrows
+- coherence becomes brittle
+- the interaction still looks fluent while meaning is already shifting
+
+ASA is built to make that hidden phase observable.
+
+For truth-seeking and long-horizon AI systems, that matters because external observability can act as a complementary layer:
+
+- not by replacing the model
+- not by fine-tuning its inner behavior
+- but by making trajectory instability visible early enough for human or system-level response
 
 ## What This Repository Contains
 
@@ -109,25 +138,25 @@ They describe how the public ASA instrument uses each protocol layer without dup
 
 ### Overview
 
-Main research console view with trajectory graph, signal timeline, drift heatmap, semantic envelope, and decision summary.
+Main research console view with trajectory graph, signal timeline, drift heatmap, semantic envelope, and operator-facing decision summary.
 
 ![ASA Overview](docs/preview_overview_v402.png)
 
 ### Session Monitor
 
-Single-session forensic view with decision forensics, session profile, envelope timeline, and state density.
+Single-session forensic view for reading one dialogue in depth: why the current state was assigned, how the semantic field is behaving, and what the operator should do next.
 
 ![ASA Session Monitor](docs/preview_session_monitor_v402.png)
 
 ### Multi-Session Observatory
 
-Cross-session view for stability field analysis, drift density, and research-level clustering.
+Cross-session view for stability field analysis, drift density, clustering, and pattern spread across multiple sessions.
 
 ![ASA Multi-Session Observatory](docs/preview_multi_session_v402.png)
 
 ### Pattern Detection
 
-Pattern topology and drift-type distribution across sessions for higher-level trajectory analysis.
+Pattern topology and drift-type distribution across sessions for higher-level trajectory analysis and systemic drift reading.
 
 ![ASA Pattern Detection](docs/preview_pattern_detection_v402.png)
 
@@ -187,6 +216,14 @@ python examples/basic_usage.py conversation/session_01_stable_cooperation.json
 
 The public edition also exposes a lightweight operator-facing API for external systems that only need drift and stability summaries.
 
+Why this matters:
+
+- not every external system needs the full forensic payload
+- some systems only need the current stability condition
+- some operators only need triage, warning zones, and next-step guidance
+
+The Operator API is the minimal public integration surface for that use case.
+
 Available endpoints:
 - `GET /operator/overview`
 - `GET /operator/sessions/{session_id}/drift`
@@ -215,6 +252,12 @@ Typical output includes:
 - LTP zone
 - LTP risk
 - operator recommendation
+
+In practical terms, this makes it possible to use ASA as an external analysis layer:
+
+- for operator dashboards
+- for lightweight monitoring pipelines
+- for other AI systems that need a trajectory-level drift read without consuming the full session trace
 
 For a compact integration guide, see:
 
@@ -260,6 +303,21 @@ Status: active research prototype / public observability edition
 
 This is a working system, not only a manifesto.
 At the same time, it is still experimental and under active development.
+
+ASA is already mature enough for:
+
+- partner evaluation
+- private technical review
+- controlled pilot discussion
+- strategic co-development
+
+In that sense, the current public repository should be read as a partner-ready technical window into the system, not as a finished enterprise rollout package.
+
+ASA is especially relevant where a serious partner wants:
+
+- external observability without modifying the underlying model
+- trajectory-level warnings instead of single-output scoring
+- a modular layer that can grow toward larger operational environments over time
 
 ## Public Scope
 
