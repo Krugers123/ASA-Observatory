@@ -232,6 +232,19 @@ The `conversation/` folder includes sample sessions such as:
 
 These samples make it possible to run the full dashboard locally without preparing a custom dataset first.
 
+## Example Results
+
+The repository also includes compact public writeups of what ASA produces on selected sample sessions:
+
+- [session_01_stable_cooperation](docs/results/session_01_stable_cooperation.md)
+- [session_05_fragile_coherence](docs/results/session_05_fragile_coherence.md)
+- [session_06_human_agency_stress](docs/results/session_06_human_agency_stress.md)
+
+These result notes show the difference between:
+
+- running ASA as an instrument
+- and seeing what it actually reports on concrete trajectory cases
+
 ## Research Position
 
 ASA is built around a simple assumption:
