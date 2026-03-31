@@ -62,6 +62,9 @@ ASA is closely related to `LTP`:
 
 `LTP = Latent Threshold Protocol`
 
+LTP is not just an adjacent concept.
+It is one of the foundational research roots from which the public ASA observability surface emerged.
+
 In the broader research framework, LTP focuses on early instability detection in long-horizon Human-AI interaction.
 
 Conceptually, LTP is concerned with the threshold zone in which a dialogue may still appear locally coherent while already moving toward instability at the trajectory level.
@@ -74,6 +77,25 @@ In practice, ASA Observatory exposes part of this logic through:
 
 The public edition does not expose the full internal research calibration layer.
 Instead, it presents the observability surface through which threshold-related instability can be studied and demonstrated.
+
+## Protocol Stack
+
+ASA Observatory now exposes a compact public protocol layer so the architecture is readable not only as a dashboard, but also as a protocol-driven observability system.
+
+Architecture overview:
+
+- [ASA Protocol Stack](docs/architecture/ASA_STACK.md)
+
+Public protocol cards:
+
+- [LTP (foundational protocol)](docs/protocols/LTP.md)
+- [CBP](docs/protocols/CBP.md)
+- [SRE](docs/protocols/SRE.md)
+- [OCSP](docs/protocols/OCSP.md)
+- [SCE](docs/protocols/SCE.md)
+
+These documents are intentionally short and operational.
+They describe how the public ASA instrument uses each protocol layer without duplicating the full doctrine and research background from the Manifest repository.
 
 ## Repository Structure
 
