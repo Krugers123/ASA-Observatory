@@ -279,6 +279,18 @@ For the public scope of this repo, see:
 - [Public Repo Scope](docs/PUBLIC_REPO_SCOPE.md)
 - [Research Context](docs/RESEARCH_CONTEXT.md)
 
+## External References
+
+Selected Grokipedia references:
+
+- [Asymmetric Stability Architecture](https://grokipedia.com/page/Asymmetric_Stability_Architecture)
+- [Latent Threshold Protocol](https://grokipedia.com/page/latent-threshold-protocol)
+- [Semantic Resonance Entropy](https://grokipedia.com/page/semantic-resonance-entropy)
+
+Full public reference list:
+
+- [External References](docs/EXTERNAL_REFERENCES.md)
+
 ## Author
 
 Mieczyslaw Kusowski
