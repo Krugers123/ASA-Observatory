@@ -111,25 +111,25 @@ They describe how the public ASA instrument uses each protocol layer without dup
 
 Main research console view with trajectory graph, signal timeline, drift heatmap, semantic envelope, and decision summary.
 
-![ASA Overview](docs/preview_overview.png)
+![ASA Overview](docs/preview_overview_v402.png)
 
 ### Session Monitor
 
 Single-session forensic view with decision forensics, session profile, envelope timeline, and state density.
 
-![ASA Session Monitor](docs/preview_session_monitor.png)
+![ASA Session Monitor](docs/preview_session_monitor_v402.png)
 
 ### Multi-Session Observatory
 
 Cross-session view for stability field analysis, drift density, and research-level clustering.
 
-![ASA Multi-Session Observatory](docs/preview_multi_session.png)
+![ASA Multi-Session Observatory](docs/preview_multi_session_v402.png)
 
 ### Pattern Detection
 
 Pattern topology and drift-type distribution across sessions for higher-level trajectory analysis.
 
-![ASA Pattern Detection](docs/preview_pattern_detection.png)
+![ASA Pattern Detection](docs/preview_pattern_detection_v402.png)
 
 ## Quick Start
 
