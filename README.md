@@ -68,6 +68,12 @@ The broader conceptual and research background lives in the Symbioza / Manifest 
 
 [Manifest-Symbiozy-2025](https://github.com/Krugers123/Manifest-Symbiozy-2025)
 
+## Walkthrough Video
+
+A short overview video of the current ASA Observatory public research surface:
+
+[Watch the ASA Observatory overview](docs/ASA4_Observatory_Overview.mp4)
+
 ## Current Capabilities
 
 The current public edition tracks:
