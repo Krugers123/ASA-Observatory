@@ -72,7 +72,11 @@ The broader conceptual and research background lives in the Symbioza / Manifest 
 
 A short overview video of the current ASA Observatory public research surface:
 
-[Watch the ASA Observatory overview](docs/ASA4_Observatory_Overview.mp4)
+[Watch the ASA Observatory overview on X](https://x.com/Symbioza2025/status/2037262663017779353?s=20)
+
+Archive copy:
+
+[Download the ASA Observatory overview video](docs/ASA4_Observatory_Overview.mp4)
 
 ## Current Capabilities
 
