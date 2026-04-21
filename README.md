@@ -53,6 +53,8 @@ For truth-seeking and long-horizon AI systems, that matters because external obs
 ## What This Repository Contains
 
 This repository is the working public research edition of ASA.
+This is a working, installable system.
+You can run it locally in minutes.
 
 Included:
 - analytical core for dialogue trajectory observation
@@ -309,7 +311,7 @@ The goal is to detect when meaning starts to break before the collapse becomes v
 
 ## Current Status
 
-Status: active research prototype / public observability edition
+Status: fully functional, open-source public edition.
 
 This is a working system, not only a manifesto.
 At the same time, it is still experimental and under active development.
@@ -321,7 +323,7 @@ ASA is already mature enough for:
 - controlled pilot discussion
 - strategic co-development
 
-In that sense, the current public repository should be read as a partner-ready technical window into the system, not as a finished enterprise rollout package.
+In that sense, the current public repository should be read as a partner-ready technical window into the system.
 
 ASA is especially relevant where a serious partner wants:
 
