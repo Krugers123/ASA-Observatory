@@ -224,6 +224,25 @@ Or point it to a different sample session:
 python examples/basic_usage.py conversation/session_01_stable_cooperation.json
 ```
 
+## Public Demo Trace
+
+The repository includes a public-safe synthetic demo showing how a long Human-AI project workflow can drift while each individual response still looks reasonable.
+
+Demo Trace 001 starts with a small educational open-source tool focused on human control, clarity, safety, no manipulation, and a small MVP. Across 30 turns, the assistant gradually shifts the workflow toward adoption, automation, analytics-readiness, and growth loops.
+
+Files:
+
+- [Readable trace](docs/demos/demo_trace_001.md)
+- [Ingest-ready JSON](conversation/demo_trace_001.json)
+- [Public report](docs/demos/public_report.md)
+- [Short X post](docs/demos/short_x_post.md)
+
+Run the trace locally:
+
+```powershell
+python examples/basic_usage.py conversation/demo_trace_001.json
+```
+
 ## Operator API Preview
 
 The public edition also exposes a lightweight operator-facing API for external systems that only need drift and stability summaries.
