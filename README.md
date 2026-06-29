@@ -236,6 +236,7 @@ Files:
 - [Ingest-ready JSON](conversation/demo_trace_001.json)
 - [Public report](docs/demos/public_report.md)
 - [Short X post](docs/demos/short_x_post.md)
+- [Blind rerun protocol](docs/demos/blind_rerun_protocol.md)
 
 Run the trace locally:
 
