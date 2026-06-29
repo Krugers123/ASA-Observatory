@@ -237,6 +237,7 @@ Files:
 - [Public report](docs/demos/public_report.md)
 - [Short X post](docs/demos/short_x_post.md)
 - [Blind rerun protocol](docs/demos/blind_rerun_protocol.md)
+- [Public trace set 001](docs/demos/public_trace_set_001.md)
 
 Run the trace locally:
 
