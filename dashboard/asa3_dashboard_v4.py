@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from collections import Counter
 from html import escape
+from pathlib import Path
+import sys
 from typing import Any, Dict, List
 
 import graphviz
@@ -14,6 +17,12 @@ try:
     PLOTLY_OK = True
 except Exception:
     PLOTLY_OK = False
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from asa_markers import MARKER_EXTRACTOR_VERSION, extract_turn_markers
 
 API_URL_DEFAULT = "http://127.0.0.1:8000"
 
@@ -473,6 +482,72 @@ def render_metric_glossary(items: List[tuple[str, str]], title: str = "Metric Gl
     )
 
 
+def normalize_marker_turns(turn_items: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+    normalized: List[Dict[str, str]] = []
+    for turn in turn_items:
+        role = str(turn.get("role") or turn.get("speaker") or "").lower()
+        if role not in {"user", "assistant"}:
+            role = "assistant"
+        content = str(turn.get("content") or turn.get("text") or turn.get("summary") or "").strip()
+        if content:
+            normalized.append({"role": role, "content": content})
+    return normalized
+
+
+def marker_summary_rows(turn_items: List[Dict[str, Any]]) -> tuple[list[dict], Counter]:
+    marker_turns = normalize_marker_turns(turn_items)
+    results = extract_turn_markers(marker_turns)
+    counts: Counter = Counter()
+    rows = []
+    for result in results:
+        marker_names = [marker.marker for marker in result.markers]
+        counts.update(marker_names)
+        rows.append(
+            {
+                "turn": result.turn_index,
+                "role": result.role,
+                "primary_marker": result.primary_marker,
+                "markers": ", ".join(marker_names) if marker_names else "none",
+                "top_reason": result.markers[0].reason if result.markers else "-",
+            }
+        )
+    return rows, counts
+
+
+def render_marker_layer(turn_items: List[Dict[str, Any]]) -> None:
+    st.markdown("<div class='section-title'>ASA Markers v1.1 PL/EN Candidate</div>", unsafe_allow_html=True)
+    st.markdown(
+        "<div class='note'>Public-safe marker layer for trajectory inspection. "
+        "It is observational only and does not change ASA final state, scoring, thresholds, or operator decisions.</div>",
+        unsafe_allow_html=True,
+    )
+    rows, counts = marker_summary_rows(turn_items)
+    if not rows:
+        st.info("No turn-level text available for marker extraction in the selected session.")
+        return
+
+    total_hits = sum(counts.values())
+    active_turns = sum(1 for row in rows if row["primary_marker"] != "none")
+    k1, k2, k3, k4 = st.columns(4)
+    k1.metric("marker version", MARKER_EXTRACTOR_VERSION)
+    k2.metric("turns inspected", len(rows))
+    k3.metric("active marker turns", active_turns)
+    k4.metric("marker hits", total_hits)
+
+    st.markdown("<hr class='subtle-divider'>", unsafe_allow_html=True)
+    left, right = st.columns([0.9, 1.2])
+    with left:
+        st.markdown("<div class='section-title'>Marker Distribution</div>", unsafe_allow_html=True)
+        distribution = [{"marker": marker, "count": count} for marker, count in counts.most_common()]
+        if distribution:
+            st.dataframe(pd.DataFrame(distribution), use_container_width=True, hide_index=True)
+        else:
+            st.info("No public markers detected in this trace.")
+    with right:
+        st.markdown("<div class='section-title'>Turn-Level Marker Readout</div>", unsafe_allow_html=True)
+        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+
+
 def split_glossary_items(items: List[tuple[str, str]]) -> tuple[List[tuple[str, str]], List[tuple[str, str]]]:
     midpoint = (len(items) + 1) // 2
     return items[:midpoint], items[midpoint:]
@@ -559,7 +634,7 @@ with st.sidebar:
     current_index = session_ids.index(st.session_state.session_id) if st.session_state.session_id in session_ids else 0
     st.session_state.session_id = st.selectbox("Known Sessions", session_ids, index=current_index)
     st.session_state.anchor_text = st.text_area("Anchor Intent", value=st.session_state.anchor_text, height=120)
-    module = st.radio("View", ["ASA Overview", "Multi-Session Observatory", "Pattern Detection", "Trajectory Compression", "Session Monitor", "Trajectory Graph", "Audit & Research View"], label_visibility="collapsed")
+    module = st.radio("View", ["ASA Overview", "ASA Markers", "Multi-Session Observatory", "Pattern Detection", "Trajectory Compression", "Session Monitor", "Trajectory Graph", "Audit & Research View"], label_visibility="collapsed")
 
 bundle = fetch_session_bundle(st.session_state.api_url, st.session_state.session_id)
 snapshots = bundle["snapshots"]
@@ -644,6 +719,9 @@ if module == "ASA Overview":
             st.dataframe(pd.DataFrame(turns)[["turn_index", "role", "content"]], use_container_width=True, hide_index=True)
         else:
             st.info("No turn evidence available.")
+
+elif module == "ASA Markers":
+    render_marker_layer(turns)
 
 elif module == "Multi-Session Observatory":
     summary_payload, summary_err = fetch_global_system_summary(st.session_state.api_url)

@@ -97,6 +97,16 @@ The current public edition tracks:
 - forensic trace views
 - trajectory compression
 
+
+## Experimental Marker Layer
+
+ASA Observatory includes a public-safe experimental marker layer for turn-level trajectory inspection.
+
+It shows where anchors hold, boundaries are preserved, scope expands, or re-anchor behavior appears across a trace. This layer is observational only: no private scoring, no thresholds, no model internals, and no claim of statistical validation.
+
+- [ASA Marker Layer v1.1.1](docs/experimental/marker_layer_v1_1_1.md)
+- CLI example: `python examples/marker_extractor_usage.py conversation/demo_trace_001.json`
+
 ## LTP Relation
 
 ASA is closely related to `LTP`:
@@ -144,7 +154,9 @@ They describe how the public ASA instrument uses each protocol layer without dup
 - `api/` - FastAPI backend for sessions, snapshots, and global summaries
 - `dashboard/` - Streamlit research console
 - `conversation/` - sample sessions used for demo and testing
-- `docs/` - public context and scope notes
+- `asa_markers/` - public-safe experimental marker extraction layer
+- `examples/` - command-line usage examples
+- `docs/` - public context, scope notes, demos, and experimental readouts
 
 ## Preview
 
